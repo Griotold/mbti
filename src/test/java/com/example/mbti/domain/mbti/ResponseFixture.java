@@ -3,7 +3,7 @@ package com.example.mbti.domain.mbti;
 public class ResponseFixture {
 
     public static Response createResponse(String email, String sessionId, Integer score, Question question) {
-        ResponseCreateRequest createRequest = new ResponseCreateRequest(email, sessionId, score);
+        ResponseCreateRequest createRequest = new ResponseCreateRequest(email, sessionId,score);
         return Response.create(createRequest, question);
     }
 
