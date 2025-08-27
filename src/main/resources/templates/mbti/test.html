@@ -152,36 +152,38 @@
                 <span>그렇지 않다</span>
             </div>
             <div class="choices-row">
-                <!-- 1,2,3: green(왼쪽), 4: gray(중간), 5,6,7: purple(오른쪽) -->
-                <input type="radio" th:id="|${question.id}-1|" th:name="responses[__${qi.index}__].score" class="choice-input" value="7" required/>
+                <!-- name을 items[...]로 변경 -->
+                <input type="radio" th:id="|${question.id}-1|" th:name="items[__${qi.index}__].score" class="choice-input" value="7" required />
                 <label th:for="|${question.id}-1|" class="choice-label green strong">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-2|" th:name="responses[__${qi.index}__].score" class="choice-input" value="6"/>
-                <label th:for="|${question.id}-2|" class="choice-label green" >
+                <input type="radio" th:id="|${question.id}-2|" th:name="items[__${qi.index}__].score" class="choice-input" value="6" />
+                <label th:for="|${question.id}-2|" class="choice-label green">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-3|" th:name="responses[__${qi.index}__].score" class="choice-input" value="5"/>
-                <label th:for="|${question.id}-3|" class="choice-label green" >
+                <input type="radio" th:id="|${question.id}-3|" th:name="items[__${qi.index}__].score" class="choice-input" value="5" />
+                <label th:for="|${question.id}-3|" class="choice-label green">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-4|" th:name="responses[__${qi.index}__].score" class="choice-input" value="4"/>
+                <input type="radio" th:id="|${question.id}-4|" th:name="items[__${qi.index}__].score" class="choice-input" value="4" />
                 <label th:for="|${question.id}-4|" class="choice-label gray">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-5|" th:name="responses[__${qi.index}__].score" class="choice-input" value="3"/>
+                <input type="radio" th:id="|${question.id}-5|" th:name="items[__${qi.index}__].score" class="choice-input" value="3" />
                 <label th:for="|${question.id}-5|" class="choice-label purple">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-6|" th:name="responses[__${qi.index}__].score" class="choice-input" value="2"/>
+                <input type="radio" th:id="|${question.id}-6|" th:name="items[__${qi.index}__].score" class="choice-input" value="2" />
                 <label th:for="|${question.id}-6|" class="choice-label purple">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-7|" th:name="responses[__${qi.index}__].score" class="choice-input" value="1"/>
+                <input type="radio" th:id="|${question.id}-7|" th:name="items[__${qi.index}__].score" class="choice-input" value="1" />
                 <label th:for="|${question.id}-7|" class="choice-label purple strong">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="hidden" th:name="responses[__${qi.index}__].questionId" th:value="${question.id}" />
+                <!-- questionId도 items로 매핑 -->
+                <input type="hidden" th:name="items[__${qi.index}__].questionId" th:value="${question.id}" />
+                <input type="hidden" th:name="items[__${qi.index}__].sessionId" th:value="${sessionId}" />
             </div>
         </div>
         <div class="footer" style="display: flex; flex-direction: column; align-items: flex-end;">

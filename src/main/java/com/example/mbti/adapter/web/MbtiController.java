@@ -4,6 +4,7 @@ import com.example.mbti.application.mbti.provided.QuestionFinder;
 import com.example.mbti.application.mbti.provided.ResponseModifier;
 import com.example.mbti.domain.mbti.Question;
 import com.example.mbti.domain.mbti.ResponseBatchCreateRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,9 +22,14 @@ public class MbtiController {
     private final ResponseModifier responseModifier;
 
     @GetMapping
-    public String getQuestions(@RequestParam(defaultValue = "1") int page, Model model) {
+    public String getQuestions(@RequestParam(defaultValue = "1") int page,
+                               Model model,
+                               HttpServletRequest request) {
+        String sessionId = request.getSession().getId();
         Pageable pageable = PageRequest.of(page - 1, 5); // 0-based index
         Page<Question> questions = questionFinder.getQuestions(pageable);
+
+        model.addAttribute("sessionId", sessionId);
         model.addAttribute("questions", questions.getContent());
         model.addAttribute("currentPage", page);
         return "mbti/test"; // 타임리프 템플릿명
