@@ -1,5 +1,6 @@
 package com.example.mbti.domain.mbti;
 
+import com.example.mbti.domain.MbtiScoreSummary;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -80,6 +81,24 @@ public class Result {
         result.tScore = requireNonNull(createRequest.tScore());
         result.jScore = requireNonNull(createRequest.jScore());
         result.pScore = requireNonNull(createRequest.pScore());
+
+        return result;
+    }
+
+    public static Result create(String email, String sessionId, MbtiType mbtiType, MbtiScoreSummary summary) {
+        Result result = new Result();
+
+        result.email = email;
+        result.sessionId = requireNonNull(sessionId);
+        result.mbtiType = requireNonNull(mbtiType);
+        result.eScore = summary.eScore();
+        result.iScore = summary.iScore();
+        result.sScore = summary.sScore();
+        result.nScore = summary.nScore();
+        result.fScore = summary.fScore();
+        result.tScore = summary.tScore();
+        result.jScore = summary.jScore();
+        result.pScore = summary.pScore();
 
         return result;
     }

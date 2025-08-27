@@ -68,4 +68,6 @@ public class Response {
     static boolean isValidScore(Integer score) {
         return score != null && score >= 1 && score <= 7;
     }
+
+    
 }
