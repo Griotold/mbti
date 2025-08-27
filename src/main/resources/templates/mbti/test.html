@@ -153,15 +153,15 @@
             </div>
             <div class="choices-row">
                 <!-- 1,2,3: green(왼쪽), 4: gray(중간), 5,6,7: purple(오른쪽) -->
-                <input type="radio" th:id="|${question.id}-1|" th:name="responses[__${qi.index}__].score" class="choice-input" value="1" required/>
+                <input type="radio" th:id="|${question.id}-1|" th:name="responses[__${qi.index}__].score" class="choice-input" value="7" required/>
                 <label th:for="|${question.id}-1|" class="choice-label green strong">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-2|" th:name="responses[__${qi.index}__].score" class="choice-input" value="2"/>
+                <input type="radio" th:id="|${question.id}-2|" th:name="responses[__${qi.index}__].score" class="choice-input" value="6"/>
                 <label th:for="|${question.id}-2|" class="choice-label green" >
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-3|" th:name="responses[__${qi.index}__].score" class="choice-input" value="3"/>
+                <input type="radio" th:id="|${question.id}-3|" th:name="responses[__${qi.index}__].score" class="choice-input" value="5"/>
                 <label th:for="|${question.id}-3|" class="choice-label green" >
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
@@ -169,25 +169,54 @@
                 <label th:for="|${question.id}-4|" class="choice-label gray">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-5|" th:name="responses[__${qi.index}__].score" class="choice-input" value="5"/>
+                <input type="radio" th:id="|${question.id}-5|" th:name="responses[__${qi.index}__].score" class="choice-input" value="3"/>
                 <label th:for="|${question.id}-5|" class="choice-label purple">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-6|" th:name="responses[__${qi.index}__].score" class="choice-input" value="6"/>
+                <input type="radio" th:id="|${question.id}-6|" th:name="responses[__${qi.index}__].score" class="choice-input" value="2"/>
                 <label th:for="|${question.id}-6|" class="choice-label purple">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
-                <input type="radio" th:id="|${question.id}-7|" th:name="responses[__${qi.index}__].score" class="choice-input" value="7"/>
+                <input type="radio" th:id="|${question.id}-7|" th:name="responses[__${qi.index}__].score" class="choice-input" value="1"/>
                 <label th:for="|${question.id}-7|" class="choice-label purple strong">
                     <svg viewBox="0 0 20 20"><polyline points="4,11 8,15 16,6" fill="none"/></svg>
                 </label>
                 <input type="hidden" th:name="responses[__${qi.index}__].questionId" th:value="${question.id}" />
             </div>
         </div>
-        <div class="footer">
-            <button class="btn-next" type="submit" th:text="${currentPage}==4 ? '결과 보기 →' : '다음 →'"></button>
+        <div class="footer" style="display: flex; flex-direction: column; align-items: flex-end;">
+            <button class="btn-next" type="submit" disabled
+                    th:text="${currentPage}==4 ? '결과 보기 →' : '다음 →'">
+            </button>
+            <div id="error-message"
+                 style="color: #ef5350; font-size: 1em; font-weight: 500; margin-top: 10px; align-self: flex-start;">
+            </div>
         </div>
+
     </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector('form');
+            const btn = document.querySelector('.btn-next');
+            const error = document.getElementById('error-message');
+
+            function checkAllAnswered() {
+                const groups = Array.from(form.querySelectorAll('.choices-row'));
+                const allChecked = groups.every(group => {
+                    return Array.from(group.querySelectorAll('input[type=radio]')).some(input => input.checked);
+                });
+                if (!allChecked) {
+                    btn.disabled = true;
+                    error.textContent = '5개 모두 답변해야 다음 단계로 이동할 수 있습니다.';
+                } else {
+                    btn.disabled = false;
+                    error.textContent = '';
+                }
+            }
+            form.addEventListener('change', checkAllAnswered);
+            checkAllAnswered(); // 최초 진입시 검사
+        });
+    </script>
 </div>
 </body>
 </html>
