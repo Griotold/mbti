@@ -15,7 +15,7 @@ import static java.util.Objects.requireNonNull;
 @Table(name = "response",
         indexes = {
                 @Index(name = "idx_email", columnList = "email"),
-                @Index(name = "idx_session_id", columnList = "sessionId")
+                @Index(name = "idx_session_id", columnList = "session_id")
         })
 @EntityListeners(AuditingEntityListener.class)
 @Getter
