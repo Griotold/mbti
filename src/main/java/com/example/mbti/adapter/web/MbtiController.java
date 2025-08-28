@@ -2,8 +2,11 @@ package com.example.mbti.adapter.web;
 
 import com.example.mbti.application.mbti.provided.QuestionFinder;
 import com.example.mbti.application.mbti.provided.ResponseModifier;
+import com.example.mbti.application.mbti.provided.ResultFinder;
+import com.example.mbti.application.mbti.provided.ResultModifier;
 import com.example.mbti.domain.mbti.Question;
 import com.example.mbti.domain.mbti.ResponseBatchCreateRequest;
+import com.example.mbti.domain.mbti.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,7 @@ public class MbtiController {
 
     private final QuestionFinder questionFinder;
     private final ResponseModifier responseModifier;
+    private final ResultFinder resultFinder;
 
     @GetMapping
     public String getQuestions(@RequestParam(defaultValue = "1") int page,
@@ -46,12 +50,20 @@ public class MbtiController {
         return "redirect:/mbti-test/result";
     }
 
-//    @GetMapping("/result")
-//    public String showResult(@RequestParam String sessionId, Model model) {
-//        // sessionId로 결과 조회
-//        Result result = ...; // 결과 조회 서비스 호출
-//        model.addAttribute("result", result);
-//        return "mbti/result"; // 결과 화면 타임리프 템플릿명
-//    }
+    @GetMapping("/result")
+    public String showResult(HttpServletRequest request, Model model) {
+        String sessionId = request.getSession().getId(); // 세션에서 직접 가져오기
 
+        // 결과 계산 및 조회
+        Result result = resultFinder.getOrCreateResult(sessionId);
+
+        model.addAttribute("result", result);
+        return "mbti/result"; // 결과 화면 타임리프 템플릿명
+    }
+
+    @GetMapping("/reset")
+    public String resetTest(HttpServletRequest request) {
+        request.getSession().invalidate(); // 기존 세션 무효화
+        return "redirect:/mbti-test"; // 새 세션으로 테스트 시작
+    }
 }

@@ -17,4 +17,12 @@ public interface ResultFinder {
      * @return boolean
      */
     boolean existsBySessionId(String sessionId);
+
+    /**
+     * 결과 조회 또는 생성
+     * 기존 결과가 있으면 반환, 없으면 새로 계산해서 반환
+     * @param sessionId
+     * @return Result
+     */
+    Result getOrCreateResult(String sessionId);
 }
